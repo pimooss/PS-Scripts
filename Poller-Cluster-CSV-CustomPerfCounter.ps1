@@ -6,6 +6,7 @@
 # 
 # Usage :
 #   Scheduled task
+#   First, create the custom performance counter with Poller-Cluster-CSV-CustomPerfCounter.ps1 script
 #
 # Joris DECOMBE
 #
