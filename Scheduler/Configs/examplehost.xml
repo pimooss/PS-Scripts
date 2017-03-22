@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!--Schedule tasks for Example-->
+<Host Name="Hostname" fqdn="FQDN" Org="CORP" Enabled="True">
+  <!--Host Principal (user account to logon and to make the task run-->
+  <Principal>DOMAIN\USER</Principal>
+  <SecString>SecureString</SecString>
+  <!--Job Name will be the name of the scheduled task, Type can be Task, Job and Command-->
+  <Job Name="Start Service" Enabled="False" Type="Task">
+    <Description>Start Service Plop</Description>
+    <!--Task Principal (user account to logon and to make the task run-->
+    <Principal>POUET!</Principal>
+    <SecString />
+    <!--Command : To use only if Job Type = Command-->
+    <Command />
+    <!--Action : To use only if Job Type = Job or Task-->
+    <Action>Start_Service</Action>
+    <!--Arguments : will be arguments of an action or a command-->
+    <Arguments>-ServiceName "Plop"</Arguments>
+    <!--Trigger can be ( Daily | Weekly | Monthly)-->
+    <Trigger>Weekly</Trigger>
+    <Daily>
+      <!--DaysInterval (1-365)-->
+      <DaysInterval />
+    </Daily>
+    <Weekly>
+      <!--WeeksInterval (1-52)-->
+      <WeeksInterval>1</WeeksInterval>
+      <!--DaysofWeek (Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday)-->
+      <DaysofWeek>Monday</DaysofWeek>
+    </Weekly>
+    <Monthly>
+      <!--DaysofMonth (1-31 but 1-28 is recommended)-->
+      <DaysofMonth />
+      <!--WeekDayOfMonthPosition (First | Second | Third | Fourth | Last)-->
+      <WeekDayOfMonthPosition>Second</WeekDayOfMonthPosition>
+      <!--WeekDayOfMonth (Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday)-->
+      <WeekDayOfMonth>Wednesday</WeekDayOfMonth>
+    </Monthly>
+    <!--At Time of the Job (3am, or 03:00)-->
+    <At>22:10</At>
+  </Job>
+  <Job Name="GetFreeSpace C" Enabled="True" Type="Remote_Task">
+    <Description>GetFreeSpace</Description>
+    <!--Task Principal (user account to logon and to make the task run-->
+    <Principal />
+    <SecString />
+    <!--Command : To use only if Job Type = Command-->
+    <Command />
+    <!--Action : To use only if Job Type = Job or Task-->
+    <Action>GetFreeSpace</Action>
+    <!--Arguments : will be arguments of an action or a command-->
+    <Arguments>-Drive C:</Arguments>
+    <!--Trigger can be ( Daily | Weekly | Monthly)-->
+    <Trigger>Daily</Trigger>
+    <Daily>
+      <!--DaysInterval (1-365)-->
+      <DaysInterval />
+    </Daily>
+    <Weekly>
+      <!--WeeksInterval (1-52)-->
+      <WeeksInterval />
+      <!--DaysofWeek (Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday)-->
+      <DaysofWeek>
+      </DaysofWeek>
+    </Weekly>
+    <Monthly>
+      <!--DaysofMonth (1-31 but 1-28 is recommended)-->
+      <DaysofMonth />
+      <!--WeekDayOfMonthPosition (First | Second | Third | Fourth | Last)-->
+      <WeekDayOfMonthPosition>Second</WeekDayOfMonthPosition>
+      <!--WeekDayOfMonth (Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday)-->
+      <WeekDayOfMonth>Wednesday</WeekDayOfMonth>
+    </Monthly>
+    <!--At Time of the Job (3am, or 03:00)-->
+    <At>18:15</At>
+  </Job>
+
+</Host>
