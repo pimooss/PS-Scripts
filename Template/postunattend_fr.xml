@@ -26,7 +26,7 @@
             <TimeZone>Romance Standard Time</TimeZone>
             <UserAccounts>
                 <AdministratorPassword>
-                    <Value>v8Q7vbsHsDw5Oxfn</Value>
+                    <Value>%SecurePassword%</Value>
                     <PlainText>true</PlainText>
                 </AdministratorPassword>
                 <LocalAccounts>
@@ -36,9 +36,9 @@
                             <PlainText>true</PlainText>
                         </Password>
                         <Group>administrateurs</Group>
-                        <DisplayName>noc</DisplayName>
-                        <Name>noc</Name>
-                        <Description>noc</Description>
+                        <DisplayName>localadmin</DisplayName>
+                        <Name>localadmin</Name>
+                        <Description>localadmin</Description>
                     </LocalAccount>
                 </LocalAccounts>
             </UserAccounts>
