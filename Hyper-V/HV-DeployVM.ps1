@@ -1,5 +1,5 @@
 #
-# Jaguar Network - Create VM for Windows 2016 (with powershell direct)
+# Create VM for Windows 2016 (with powershell direct)
 #
 # J.DECOMBE
 #
