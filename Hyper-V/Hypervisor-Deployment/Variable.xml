@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ==============================================================================================
+		
+	File:		Variable
+	
+	Purpose:	JN Deployment File
+					
+    Version: 	1.0
+    
+ ==============================================================================================
+-->
+<Installer version="1.0">
+  <Variable Name="Entity" Value="Cust" />
+  <Variable Name="InstallerAccount" Value="Administrator" />
+  <Variable Name="InstallerAccountPassword" Value="P@ssw0rd" />
+  <Variable Name="NetAppHU" Value="netapp_windows_host_utilities_7.0_x64.msi" />
+  <Variable Name="NetAppMPIO" Value="ntap_win_mpio_4.1P1_setup_x64.msi" />
+  <Variable Name="DefaultLACPName" Value="LACP0" />
+  <Variable Name="vSwitchName" Value="vSwitch" />
+  <Variable Name="ActivateJumboPacket" Value="True" />
+  <Variable Name="DeploymentHost" Value="HOSTNAME" />
+  <Variable Name="DeploymentHostFormatiSCSIDisk" Value="True" />
+  
+<NetworkAdapter>
+    <iSCSI>
+        <IP>
+          <NIC>NIC5</NIC>
+          <Prefix>192.168.200.20</Prefix>
+          <Mask>24</Mask>
+          <Gateway></Gateway>
+          <DNS></DNS>
+          <VLAN>200</VLAN>
+        </IP>
+        <IP>
+          <NIC>NIC7</NIC>
+          <Prefix>192.168.201.20</Prefix>
+          <Mask>24</Mask>
+          <Gateway></Gateway>
+          <DNS></DNS>
+          <VLAN>201</VLAN>
+        </IP>
+    </iSCSI>
+</NetworkAdapter>
+
+<iSCSI>
+    <Portal>
+        <IP>192.168.200.200</IP>
+        <IP>192.168.200.201</IP>
+        <IP>192.168.201.200</IP>
+        <IP>192.168.201.201</IP>
+    </Portal>
+</iSCSI>
+
+</Installer>
