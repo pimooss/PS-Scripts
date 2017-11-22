@@ -1,3 +1,10 @@
+#
+# Simple local account creation and admin group membership added
+#
+# Compatible with w10/2016
+#
+# Joris DECOMBE
+
 
 $UserName = "localadmin01"
 $Computer = [ADSI]"WinNT://$env:COMPUTERNAME,Computer"
