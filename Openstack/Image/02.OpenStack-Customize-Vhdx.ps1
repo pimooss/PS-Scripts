@@ -23,14 +23,14 @@ ForEach ($imgfile In $Images) {
     Switch ($namearray[0]) {
         "2012r2" {
             Switch ($namearray[2]) {
-                "std"   { $key = "" }
-                "dc"    { $key = "" }
+                "std"   { $key = "" } #<- Insert your productkey here
+                "dc"    { $key = "" } #<- Insert your productkey here
             }
         }
         "2016" {
             Switch ($namearray[2]) {
-                "std"   { $key = "" }
-                "dc"    { $key = "" }
+                "std"   { $key = "" } #<- Insert your productkey here
+                "dc"    { $key = "" } #<- Insert your productkey here
             }
         }
     }
