@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='utf-8'?>
+<unattend xmlns="urn:schemas-microsoft-com:unattend" xmlns:ms="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    
+    <settings pass="generalize" wasPassProcessed="true">
+      <component name="Microsoft-Windows-PnPSysprep" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+        <PersistAllDeviceInstalls>true</PersistAllDeviceInstalls>
+      </component>
+
+      <component name="Microsoft-Windows-Security-SPP" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <SkipRearm>0</SkipRearm>
+      </component>
+      <component name="Microsoft-Windows-PnpSysprep" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <PersistAllDeviceInstalls>false</PersistAllDeviceInstalls>
+          <DoNotCleanUpNonPresentDevices>false</DoNotCleanUpNonPresentDevices>
+      </component>
+    </settings>
+
+    <settings pass="oobeSystem">
+        <component name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <InputLocale>fr-FR</InputLocale>
+            <SystemLocale>fr-FR</SystemLocale>
+            <UILanguage>fr-FR</UILanguage>
+            <UserLocale>fr-FR</UserLocale>
+        </component>
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <OOBE>
+                <HideEULAPage>true</HideEULAPage>
+                <ProtectYourPC>3</ProtectYourPC>
+                <NetworkLocation>Work</NetworkLocation>
+                <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
+            </OOBE>
+            
+            <TimeZone>Romance Standard Time</TimeZone>
+            <UserAccounts>
+                <AdministratorPassword>
+                    <Value>P@ssw0rd</Value>
+                    <PlainText>true</PlainText>
+                </AdministratorPassword>
+                <LocalAccounts>
+                </LocalAccounts>
+            </UserAccounts>
+            <AutoLogon>
+              <Password>
+                <Value>P@ssw0rd</Value>
+                <PlainText>true</PlainText>
+              </Password>
+              <Enabled>true</Enabled>
+              <LogonCount>1</LogonCount>
+              <Username>Administrator</Username>
+            </AutoLogon>
+
+          <FirstLogonCommands>
+
+            <SynchronousCommand wcm:action="add">
+              <CommandLine>msiexec /i c:\windows\temp\CloudbaseInit.msi /qn /l*v c:\windows\temp\CloudbaseInit.log LOGGINGSERIALPORTNAME=COM1</CommandLine>
+              <Order>1</Order>
+            </SynchronousCommand>
+
+            <SynchronousCommand wcm:action="add">
+              <CommandLine>msiexec /i c:\windows\temp\qemu-ga-x64.msi /qn /norestart /l*v c:\windows\temp\qemu-ga-x64.log</CommandLine>
+              <Order>2</Order>
+            </SynchronousCommand>
+
+            <SynchronousCommand wcm:action="add">
+              <CommandLine>del /F /Q c:\windows\temp\*.msi</CommandLine>
+              <Order>3</Order>
+            </SynchronousCommand>
+
+            <SynchronousCommand wcm:action="add">
+              <CommandLine>shutdown /r /f /t 5</CommandLine>
+              <Order>4</Order>
+            </SynchronousCommand>
+            
+          </FirstLogonCommands>
+        </component>
+    </settings>
+
+    <settings pass="specialize">
+    
+    <component name="Microsoft-Windows-Shell-Setup" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" processorArchitecture="amd64">
+      <ComputerName>*</ComputerName>
+      <ProductKey>%PRODUCTKEY%</ProductKey>
+    </component>
+
+    <component name="Microsoft-Windows-TerminalServices-LocalSessionManager" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+      <fDenyTSConnections>false</fDenyTSConnections>
+    </component>
+
+    <component name="Microsoft-Windows-TerminalServices-RDP-WinStationExtensions" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+      <UserAuthentication>0</UserAuthentication>
+    </component>
+
+    <component name="Networking-MPSSVC-Svc" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+      <FirewallGroups>
+        <FirewallGroup wcm:action="add" wcm:keyValue="RemoteDesktop">
+          <Active>true</Active>
+          <Profile>all</Profile>
+          <Group>@FirewallAPI.dll,-28752</Group>
+        </FirewallGroup>
+      </FirewallGroups>
+    </component>
+
+    <component name="Microsoft-Windows-Deployment" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+
+      <RunSynchronous>
+
+        <RunSynchronousCommand wcm:action="add">
+          <Order>1</Order>
+          <Path>netsh advfirewall firewall add rule name=ICMP protocol=icmpv4 dir=in action=allow</Path>
+
+        </RunSynchronousCommand>
+      </RunSynchronous>
+      
+    </component>
+
+  </settings>
+
+</unattend>
