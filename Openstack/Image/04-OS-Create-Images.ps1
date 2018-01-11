@@ -6,8 +6,9 @@
 # auth : Joris DECOMBE
 # 
 
-$OS_Session_Init_Script = "init_venv_openstack.ps1"
-$Image_Path = "E:\Images\OpenStack"
+$OS_Session_Init_Script = "init_venv_openstack_admin.ps1"
+$Remote_Drive = "Y"
+$Remote_Path = "\\tmpl-wintools-2016.user.as30781.net\OpenStack"
 
 $BuildDate = (Get-date -Format "dd-MM-yyyy").ToString()
 
@@ -56,7 +57,7 @@ openstack image set --name %IMAGE_NAME% %IMAGE_ID%
 
 If (!(Test-Path ($Remote_Drive+":\"))) {
     Write-Host -ForegroundColor Cyan "Mounting image remote path"
-    New-PSDrive -Name $Remote_Drive -PSProvider FileSystem -Root $Image_Path -Persist
+    New-PSDrive -Name $Remote_Drive -PSProvider FileSystem -Root $Remote_Path -Persist
 }
 
 $LocalImages = Get-ChildItem ($Remote_Drive+":\") -Filter "*.vhdx"
@@ -67,7 +68,7 @@ Write-Host -ForegroundColor Cyan $env:userprofile"\"$OS_Session_Init_Script
 
 $images | %{
     $This_VHDx_Name = ($_ -replace "windows-","")+".vhdx"
-    $This_VHDx_Image_Path = $Remote_Drive + ":\" + $This_VHDx_Name
+    $This_VHDx_Remote_Path = $Remote_Drive + ":\" + $This_VHDx_Name
 
     $namearray = $_ -split "-"
     
@@ -83,7 +84,7 @@ $images | %{
     If (Test-Path ($LocalImages | Where Name -like $This_VHDx_Name ).FullName) {
         $This_Image_Name = $_
         
-        If (Test-Path $This_VHDx_Image_Path) {
+        If (Test-Path $This_VHDx_Remote_Path) {
             Write-Host -ForegroundColor Gray "Getting Old Image ID (Image Name : $This_Image_Name)"
             $This_ListImages = Invoke-Expression $OS_Command_ListImage | ConvertFrom-Json
             $This_OldImage = $This_ListImages | Where Status -eq "active" | Where Name -eq $This_Image_Name
@@ -110,7 +111,7 @@ $images | %{
 
                     Write-Host -ForegroundColor Cyan "Uploading new template $This_VHDx_Name (Image Name : $This_Image_TempName)"
                     $This_Command_Upload = $OS_Command_Upload_Template -replace "%IMAGE_NAME%",$This_Image_TempName
-                    $This_Command_Upload = $This_Command_Upload -replace "%VHDX_PATH%",$This_VHDx_Image_Path
+                    $This_Command_Upload = $This_Command_Upload -replace "%VHDX_PATH%",$This_VHDx_Remote_Path
                     Write-Host -ForegroundColor Green $This_Command_Upload
                     $This_Upload_Image = Invoke-Expression $This_Command_Upload | ConvertFrom-Json
                     $This_Image_ID = $This_Upload_Image.ID
@@ -121,7 +122,7 @@ $images | %{
                         
                         $This_Command_Config_Template = $OS_Command_Config_Template -replace "%IMAGE_NAME%",$This_Image_TempName
                         $This_Command_Config_Template = $This_Command_Config_Template -replace "%IMAGE_ID%",$This_Image_ID
-                        $This_Command_Config_Template = $This_Command_Config_Template -replace "%VHDX_PATH%",$This_VHDx_Image_Path
+                        $This_Command_Config_Template = $This_Command_Config_Template -replace "%VHDX_PATH%",$This_VHDx_Remote_Path
                         $This_Command_Config_Template = $This_Command_Config_Template -replace "%BUILD_DATE%",$BuildDate
                         $This_Command_Config_Template = $This_Command_Config_Template -replace "%IMAGE_OSLABEL%",$This_Image_Name
                         $This_Command_Config_Template = $This_Command_Config_Template -replace "%OS_VERSION%",$OSVersion
@@ -161,7 +162,7 @@ $images | %{
             
         }
         Else {
-            Write-Host "Couldn't find $This_VHDx_Image_Path"
+            Write-Host "Couldn't find $This_VHDx_Remote_Path"
         }
 
     }
@@ -169,4 +170,6 @@ $images | %{
         Write-Host -ForegroundColor Red "No image file found for $_"
     }
 }
+Remove-PSDrive -Name $Remote_Drive -Force -Confirm:$false
+
 

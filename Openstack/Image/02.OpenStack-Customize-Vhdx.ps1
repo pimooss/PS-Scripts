@@ -58,11 +58,15 @@ ForEach ($imgfile In $Images) {
         $dst = $MountedDriveLetter + "" + $UnattendPath
         $xmlContent = (Get-Content $src) -replace "%PRODUCTKEY%",$key
         $xmlContent | Set-Content $dst -Force -Confirm:$false
+<<<<<<< HEAD
         
         Write-Host "Shrinking image"
         Invoke-Expression "dism /Image:$MountedDriveLetter\ /Cleanup-Image /StartComponentCleanup /ResetBase"
         Invoke-Expression "dism /Image:$MountedDriveLetter\ /Cleanup-Image /SPSuperseded"
 
+=======
+                
+>>>>>>> 4fedd355a3687ec589ca14d31d87c0b9317db79f
         If (Test-Path "$MountedDriveLetter\Convert-WindowsImageInfo.txt") {
             Remove-Item "$MountedDriveLetter\Convert-WindowsImageInfo.txt" -Force -Confirm:$false | Out-Null
         }
