@@ -4,7 +4,7 @@ $jobs = @();
 $dir_todo = "\\path\to\directory"
 $max_running_jobs = 20
 gci $dir_todo -Directory | %{
-    while (($jobs | where State -eq Running).Count -gt $max_running_job) { Sleep -Seconds 1 }
+    while (($jobs | where State -eq Running).Count -gt $max_running_jobs) { Sleep -Seconds 1 }
     $jobs+= start-job -ScriptBlock {(gci $args[0] -File -Recurse).count} -ArgumentList $($_.FullName)
 }
 
